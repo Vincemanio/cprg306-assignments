@@ -3,12 +3,12 @@
 import { useState } from "react";
 import ItemList from "./item-list";
 import NewItem from "./new-item";
-import ItemJson from "./items.json";
+import ItemJson from "./item.json";
 import MealIdeas from './meal-ideas';  // Import the new MealIdeas component
 
 const Page = () => {
     const [sortBy, setSortBy] = useState('name');
-    const [items, setItems] = useState(itemsJson);
+    const [items, setItems] = useState(ItemJson);
     const [selectedIngredient, setSelectedIngredient] = useState('');
 
     const handleAddItem = newItem => {
