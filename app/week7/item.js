@@ -1,6 +1,9 @@
 import React from "react";
 
 const Item = ({ name, quantity, category, onSelect }) => {
+    const handleClick = () => {
+        onSelect({ name, quantity, category });
+    };
     return(
         <div className="flex flex-col" onClick={onSelect}>
             <p className="font-mono text-lg font-bold text-xl">{name}</p>

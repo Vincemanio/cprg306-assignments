@@ -1,65 +1,36 @@
-"use client";
+"use client"
+import React, { useState, useEffect } from "react";
+import Item from './item';
 
-import { useState } from "react";   
-import Item from "./item";
+const ItemList = ({ items, sortBy, onItemSelect }) => {
+    const [sortedItems, setSortedItems] = useState([]);
 
-export default function ItemList({ items }) {
-  const [sortBy, setSortBy] = useState('name');
+    useEffect(() => {
+        const sorted = [...items].sort((a, b) => {
+            if (sortBy === 'name') {
+                return a.name.localeCompare(b.name);
+            } else if (sortBy === 'category') {
+                return a.category.localeCompare(b.category);
+            }
+            return 0;
+        });
+        setSortedItems(sorted);
+    }, [sortBy, items]);
 
-  const sortedItems = [...items].sort((a, b) => {
-    if (a[sortBy] < b[sortBy]) {
-      return -1;
-    }
-    if (a[sortBy] > b[sortBy]) {
-      return 1;
-    }
-    return 0;
-  });
-
-  const handleSortByName = () => {
-    setSortBy('name');
-  };
-
-  const handleSortByCategory = () => {
-    setSortBy('category');
-  };
-
-  return (
-    <div>
-      <div className="sorting-buttons">
-        Sort by:
-        <button
-          onClick={handleSortByName}
-          style={{
-            backgroundColor: sortBy === 'name' ? 'orange' : 'grey',
-            marginRight: '20px',
-            marginLeft: '30px',
-            padding: '12px 45px',
-            borderRadius: '10px'
-          }}
-        >
-          Name
-        </button>
-        <button
-          onClick={handleSortByCategory}
-          style={{
-            backgroundColor: sortBy === 'category' ? 'orange' : 'grey',
-            padding: '12px 45px',
-            borderRadius: '10px'
-          }}
-        >
-          Category
-        </button>
-      </div>
-
-      {sortedItems.map((item, index) => (
-        <Item
-          key={index}
-          name={item.name}
-          quantity={item.quantity}
-          category={item.category}
-        />
-      ))}
-    </div>
-  );
+    return (
+        <div className="grid grid-cols-2 p-6 m-6 mt-0 ">
+        {sortedItems.map((item, index) => (
+            <div key={index} style={{border: '1px solid purple', padding: '10px', margin: '10px'}}
+                 onClick={() => onItemSelect(item.name)}>
+                <Item 
+                    name={item.name} 
+                    quantity={item.quantity} 
+                    category={item.category} 
+                />
+            </div>
+        ))}
+        </div>
+    );
 }
+
+export default ItemList;

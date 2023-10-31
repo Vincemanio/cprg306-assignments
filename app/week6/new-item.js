@@ -1,104 +1,64 @@
 "use client";
-import { useState } from "react";
 
-export default function NewItem({ onAddItem}) {
-    const [name, setName] = useState("");
-    const [quantity, setQuantity] = useState(1);
-    const [category, setCategory] = useState("Produce");
-    const [itemCreated, setItemCreated] = useState(false); 
-    
-    const handleSubmit = (item) => {
-        item.preventDefault();
-       
-        const newItem = {
-            name,
-            quantity,
-            category,
-        };
-        console.log(newItem);
+import React, { useState } from 'react';
 
-        onAddItem(newItem);
-       
-        setItemCreated(true);
+const NewItem = ({ onAddItem }) => {
+  const [name, setName] = useState(''); 
+  const [quantity, setQuantity] = useState(1); 
+  const [category, setCategory] = useState('produce'); 
 
-        setName("");
-        setQuantity(1);
-        setCategory("Produce");
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newItem = { name, quantity, category };
+    onAddItem(newItem);
+    setName('');
+    setQuantity(1);
+    setCategory('produce');
+  };
 
-    const handleNameChange = (item) => {
-        setName(item.target.value);
-    };
+  return (
+    <form onSubmit={handleSubmit} className="max-w-lg ml-10 p-5 rounded shadow">
+      <div className="mb-4">
+        <label className="block text-red-300 text-sm font-bold mb-2">Item Name</label>
+        <input 
+          type="text" 
+          value={name} 
+          onChange={(e) => setName(e.target.value)} 
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          required 
+        />
+      </div>
 
-    const handleQuantityChange = (item) => {
-        setQuantity(item.target.value);
-    };
+      <div className="mb-4">
+        <label className="block text-red-300 text-sm font-bold mb-2">Quantity</label>
+        <input 
+          type="number" 
+          value={quantity} 
+          onChange={(e) => setQuantity(Number(e.target.value))} 
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          min="1" 
+          max="99" 
+          required/>
+      </div>
 
-    const handleCategoryChange = (item) => {
-        setCategory(item.target.value);
-    };
+      <div className="mb-4">
+        <label className="block text-red-300 text-sm font-bold mb-2">Category</label>
+        <select 
+          value={category} 
+          onChange={(e) => setCategory(e.target.value)} 
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        >
+          <option value="produce">Produce</option>
+          <option value="dairy">Dairy</option>
+          <option value="meat">Meat</option>
+          <option value="bakery">Bakery</option>
+          <option value="beverages">Beverages</option>
+        </select>
+      </div>
 
-    return (
-        <main>
-          <div className="min-h-screen bg-blue-gray-100 flex items-center justify-center">
-            {itemCreated && (
-              <div className="absolute top-0 mt-8 text-2xl text-orange-400">
-                Item Created
-              </div>
-            )}
-            <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
-              <h1 className="text-2xl text-gray-800 font-bold mb-8">
-                Create New Item
-              </h1>
-              <form onSubmit={handleSubmit}>
-                <label className="block mb-4">
-                  <span className="text-gray-800">Item Name:</span>
-                  <input
-                    required
-                    onChange={handleNameChange}
-                    value={name}
-                    className="mt-1 p-1 block w-full rounded-md text-black bg-gray-100 focus:bg-white"
-                  />
-                </label>
-                <label className="block mb-4">
-                  <span className="text-gray-800">Quantity:</span>
-                  <input
-                    type="number"
-                    required
-                    min="1"
-                    max="99"
-                    onChange={handleQuantityChange}
-                    value={quantity}
-                    className="mt-1 p-1 block w-full rounded-md text-black bg-gray-100 focus:bg-white"
-                  />
-                </label>
-                <label className="block mb-4">
-                  <span className="text-gray-800">Category:</span>
-                  <select
-                    required
-                    onChange={handleCategoryChange}
-                    value={category}
-                    className="mt-1 p-1 block w-full rounded-md text-black bg-gray-100 focus:bg-white"
-                  >
-                    <option>Produce</option>
-                    <option>Dairy</option>
-                    <option>Bakery</option>
-                    <option>Meat</option>
-                    <option>Frozen Foods</option>
-                    <option>Canned Goods</option>
-                    <option>Dry Goods</option>
-                    <option>Beverages</option>
-                    <option>Snacks</option>
-                    <option>Household</option>
-                    <option>Other</option>
-                  </select>
-                </label>
-                <button className="block w-full bg-orange-400 hover:bg-orange-300 p-4 rounded-lg text-orange-900 font-bold">
-                  Create Item
-                </button>
-              </form>
-            </div>
-          </div>
-        </main>
-      );
-    }
+      <button type="submit" className="bg-rose-400 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Item</button>
+    </form>
+  );
+};
+
+export default NewItem;

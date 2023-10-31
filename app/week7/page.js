@@ -27,10 +27,7 @@ const Page = () => {
             
             <NewItem onAddItem={handleAddItem} />
 
-            <div className="ml-14 mb-4">
-                <button onClick={() => setSortBy('name')} className={sortBy === 'name' ? 'border border-cyan-800 hover:bg-cyan-900 p-2 rounded bg-cyan-800 text-white': 'border border-cyan-800 hover:bg-cyan-900 p-2 rounded'}>Sort by Name</button>
-                <button onClick={() => setSortBy('category')} className={sortBy === 'category' ? 'ml-4 border border-cyan-800 hover:bg-cyan-900 p-2 rounded bg-cyan-800 text-white': 'ml-4 border border-cyan-800 hover:bg-cyan-900 p-2 rounded'}>Sort by Category</button>
-            </div>
+            
             
             <ItemList items={items} sortBy={sortBy} onItemSelect={handleItemSelect}/>
             
